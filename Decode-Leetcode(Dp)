@@ -1,0 +1,54 @@
+class Solution {
+public:
+    int numDecodings(string s) {
+        vector<int>st;int cnt[100005]={0}; int k1=s.length()-1;
+        st.push_back(s[s.length()-1]-'0');
+        cnt[k1]=1;
+        for(int i=s.length()-2;i>=0;i--)
+        {
+            int b=s[i]-'0';
+            if(st.size()==0)
+            {
+                st.push_back(b);
+                cnt[i]=cnt[i+1];
+            }
+            else
+            {
+                int k=st[st.size()-1];
+                int n=b*10+k;
+                if(n>=10&&n<=26)
+                {
+                    
+                    st.pop_back();
+                    if(k!=0)
+                    {
+                    st.push_back(b);
+                        if(i+2<s.length())
+                        cnt[i]=cnt[i+1]+cnt[i+2]; 
+                        else
+                            cnt[i]=cnt[i+1]+1;
+                    }
+                    else
+                        cnt[i]=cnt[i+1];
+               } 
+                else 
+                {
+                    
+                        cnt[i]=cnt[i+1];
+                    if(k==0)
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        st.pop_back();
+                        st.push_back(b);    
+                    }
+                }
+            }
+        }
+        if(st.size()>0&&st[0]==0)
+            return 0;
+        return cnt[0];
+    }
+};
