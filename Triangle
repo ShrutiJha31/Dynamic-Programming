@@ -1,0 +1,24 @@
+class Solution {
+public:
+    int minimumTotal(vector<vector<int>>& t) {
+        int n=t.size();
+        int dp[n+1][n+1];
+        memset(dp,1000000,sizeof(dp));
+        for(int i=0;i<n;i++)
+        {
+            for(int j=0;j<=i;j++)
+            {
+                if(i==0&&j==0)
+                    dp[i][j]=t[0][0];
+                else if(j==0)
+                   dp[i][j]=dp[i-1][j]+t[i][j];
+                else
+                    dp[i][j]=min(dp[i-1][j],dp[i-1][j-1])+t[i][j];
+            }
+        }
+        int m=INT_MAX;
+        for(int i=0;i<n;i++)
+            m=min(m,dp[n-1][i]);
+        return m;
+    }
+};
