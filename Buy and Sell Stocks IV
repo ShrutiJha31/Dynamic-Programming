@@ -1,0 +1,25 @@
+class Solution {
+public:
+    
+    int solve(int indx,int trans_no,int n,vector<int>&p,vector<vector<int>>&dp,int k)
+    {
+        if(indx==n||trans_no==2*k)
+            return 0;
+        if(dp[indx][trans_no]!=-1)
+            return dp[indx][trans_no];
+        
+        //the share is open to buy
+        if(trans_no%2==0)
+        return dp[indx][trans_no]=max(-p[indx]+solve(indx+1,trans_no+1,n,p,dp,k),     0+solve(indx+1,trans_no,n,p,dp,k));
+        
+        //the share has already been bought
+          return dp[indx][trans_no]=max(p[indx]+solve(indx+1,trans_no+1,n,p,dp,k),     0+solve(indx+1,trans_no,n,p,dp,k));
+        
+            
+    }
+    int maxProfit(int k, vector<int>& p) {
+        vector<vector<int>>dp(p.size(),vector<int>(2*k,-1));
+        
+        return solve(0,0,p.size(),p,dp,k); ;
+    }
+};
