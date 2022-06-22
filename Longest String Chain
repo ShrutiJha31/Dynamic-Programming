@@ -1,0 +1,52 @@
+class Solution {
+public:
+    
+    bool check(string s, string s1)
+    {
+        if(s1.length()-s.length()!=1)
+            return false;
+        int cnt=0;
+        int j=0,i=0;
+       while(j<s.length()&&i<s1.length()&&s[j]==s1[i])
+        {
+            
+                j++,i++;
+            
+        }
+        if(j==s.length())
+        {
+            return true;
+        }
+        
+        return (s.substr(j,s.length()-j).compare(s1.substr(i+1,s1.length()-i-1))==0);
+       
+        
+        
+    }
+    bool static comparator(string a,string b)
+    {
+        return a.length()<b.length();
+    }
+    int longestStrChain(vector<string>& w) {
+         
+        int maxi=0;
+        sort(w.begin(),w.end(),comparator);
+        vector<int>dp(w.size(),1);
+        for(int i=1;i<w.size();i++)
+        {
+            for(int j=0;j<i;j++)
+            {
+                if(check(w[j],w[i])&&dp[i]<dp[j]+1)
+                {
+                  
+                    dp[i]=dp[j]+1;
+                    if(dp[i]>dp[maxi])
+                    maxi=i;
+                }
+                
+            }
+        }
+        
+        return dp[maxi];
+    }
+};
