@@ -1,0 +1,23 @@
+class Solution {
+public:
+    int solve(int indx,int buy,int n,vector<int>&p,vector<vector<int>>&dp)
+    {
+        if(indx>=n)
+            return 0;
+        if(dp[indx][buy]!=-1)
+            return dp[indx][buy];
+        
+        //the share is open to buy
+        if(buy%2==0)
+        return dp[indx][buy]=max(-p[indx]+solve(indx+1,buy^1,n,p,dp),     0+solve(indx+1,buy,n,p,dp));
+        
+        //the share has already been bought
+          return dp[indx][buy]=max(p[indx]+solve(indx+2,buy^1,n,p,dp),     0+solve(indx+1,buy,n,p,dp));
+        
+            
+    }
+    int maxProfit(vector<int>& p) {
+        vector<vector<int>>dp(p.size(),vector<int>(2,-1));
+        return solve(0,0,p.size(),p,dp);
+    }
+};
