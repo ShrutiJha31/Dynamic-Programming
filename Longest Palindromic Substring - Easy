@@ -1,0 +1,46 @@
+
+class Solution {
+  public:
+    string longestPalin (string s) {
+        int dp[s.length()+1][s.length()+1]={{0}};
+    memset(dp,0,sizeof(dp));
+      for(int i=0;i<=s.length();i++)
+        dp[i][i]=1;
+        int m=1;
+        int start=0;
+        for(int l=2;l<=s.length();l++)
+        {
+            int len=0;
+            for(int j=0;j<=s.length()-l;j++)
+            {
+              int i=j+l-1;
+             if(l==2)
+             {
+                 if(s[i]==s[j])
+                 {
+                     dp[j][i]=1;
+                     len=2;
+                 }
+                 
+             }
+             else if(s[i]==s[j]&&dp[j+1][i-1])
+             {
+                 dp[j][i]=1;
+                 len=l;
+             }
+             if(len>m)
+             {
+                 m=len;
+                 start=j;
+             }
+            }
+           
+        }
+        string s2="";
+       // cout<<m<<" "<<end<<endl;
+        for(int i=start;i<start+m;i++)
+        s2.push_back(s[i]);
+        return s2;
+    }
+};
+
