@@ -1,0 +1,31 @@
+
+class Solution
+{
+    public:
+    //Function to find minimum number of attempts needed in 
+    //order to find the critical floor20
+    int  dp[201][201];
+    int solve(int n, int k)
+    {
+        if(n==1)
+        return dp[n][k]=k;
+        if(k==1||k==0)
+         return dp[n][k]=k;
+         int m=1e8;
+         if(dp[n][k]!=-1)
+         return dp[n][k];
+         for(int i=1;i<=k;i++)
+         {
+             int temp=1+max(solve(n-1,i-1),solve(n,k-i));
+             m=min(m,temp);
+         }
+         return dp[n][k]=m;
+         }
+    int eggDrop(int n, int k) 
+    {
+        memset(dp,-1,sizeof(dp));
+        return solve(n,k);
+        
+    }
+};
+
