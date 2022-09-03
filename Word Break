@@ -1,0 +1,34 @@
+class Solution
+{
+public:
+bool flag=false;
+void solve(int start,string A,unordered_map<string,int>mp)
+{
+    if(start==A.length())
+   {
+       flag=true;
+       return;
+   }
+   
+    for(int i=start;i<A.length();i++)
+    {
+        string str=A.substr(start,i-start+1);
+        
+        if(mp[str]==1)
+        {
+           
+            solve(i+1,A,mp);
+        }
+    }
+    return;
+   
+}
+
+    int wordBreak(string A, vector<string> &B) {
+        unordered_map<string,int>mp;
+        for(auto itr:B)
+        mp[itr]=1;
+        solve(0,A,mp);
+        return flag;
+    }
+};
